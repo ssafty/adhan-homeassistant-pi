@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// httpclient utility file to send homeassistant's REST API GET and POST
+// requests.
+
 package main
 
 import (
@@ -84,7 +87,7 @@ func (c *httpclient) Post(addr string, payload map[string]string) (string, int, 
 	// Send req using http Client
 	resp, statusCode, err := c.sendReq(req, c.token)
 	if err != nil {
-		return "", 0, fmt.Errorf("error while sending req %v to the httpClient: %w", req, err)
+		return "", 0, fmt.Errorf("error while sending Post req %v to the httpClient: %w", req, err)
 	}
 
 	return resp, statusCode, nil
