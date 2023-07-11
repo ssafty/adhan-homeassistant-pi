@@ -13,3 +13,7 @@
 // limitations under the License.
 
 package main
+
+func main() {
+
+}
