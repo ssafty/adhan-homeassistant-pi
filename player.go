@@ -17,9 +17,6 @@
 
 package main
 
-<<<<<<< HEAD:azanapp.go
-func main() {}
-=======
 import "errors"
 
 type adhanPlayer struct{}
@@ -36,4 +33,3 @@ func (a *adhanPlayer) Play() error {
 func (a *adhanPlayer) IsPlaying() bool {
 	return false
 }
->>>>>>> d137cdea57e1a2c563afe05d727b4751b1223c19:player.go
