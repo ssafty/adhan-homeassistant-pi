@@ -72,7 +72,7 @@ func NewHomeAssistant(opts ...homeassistantOpt) (*homeassistant, error) {
 
 	switch {
 	case ha.client == nil:
-		return nil, errors.New("NewHomeAssistant's httpclient is not specified.")
+		return nil, errors.New("Httpclient with GET/POST features is not specified.")
 	case ha.switchID == "":
 		return nil, errors.New("NewHomeAssistant's switch id/entity is not specified.")
 	case ha.ipAddr == "":
