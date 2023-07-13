@@ -12,8 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// encapsulates GET and POST requests logic away from homeassistant API handler.
+
 package main
 
-func main() {
+import (
+	"errors"
+)
 
+type httpclient struct {
+}
+
+func NewHTTPClient(token string) *httpclient {
+	return &httpclient{}
+}
+
+func (c *httpclient) Get(addr string) (string, int, error) {
+	return "", 0, errors.New("Unimplemented.")
+}
+
+func (c *httpclient) Post(addr string, payload map[string]string) (string, int, error) {
+	return "", 0, errors.New("Unimplemented.")
 }
