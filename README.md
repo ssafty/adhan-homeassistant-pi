@@ -1,6 +1,6 @@
 # Adhan HomeAssistant Pi
 
-[![Go](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/go.yml/badge.svg)](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/go.yml)
+[![Go](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/go.yml/badge.svg)](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/go.yml)[![Docker Image CI](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/docker-image.yml/badge.svg)](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/docker-image.yml)
 
 This server runs Adhan 5 times a day by switching on the speakers before the
 adhan and switching them off directly after. Thus, using raspberry pi's 2W

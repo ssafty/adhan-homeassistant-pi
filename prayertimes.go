@@ -12,6 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// handles prayer times geographicacl calculations and times till next prayers
+// calculations.
+
 package main
 
-func main() {}
+import (
+	"errors"
+	"time"
+)
+
+type prayerTimes struct {
+	Fajr    time.Time
+	Dhuhr   time.Time
+	Asr     time.Time
+	Maghrib time.Time
+	Ishaa   time.Time
+}
+
+func NewPrayerTimes() (*prayerTimes, error) {
+	return nil, errors.New("Unimplemented.")
+}
+
+func (p *prayerTimes) TimesToNearestPrayers(ts time.Time) (time.Duration, time.Duration, error) {
+	return 0, 0, errors.New("Unimplemented.")
+}

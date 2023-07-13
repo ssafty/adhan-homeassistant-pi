@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// httpclient utility file to send homeassistant's REST API GET and POST
-// requests.
+// httpclient utility functions to send homeassistant's REST API GET and POST
+// requests. It encapsulates GET and POST requests logic away from homeassistant API handler.
 
 package main
 
