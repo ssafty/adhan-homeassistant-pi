@@ -61,8 +61,8 @@ func HTTPClient(c *httpclient) homeassistantOpt {
 }
 
 // Initializes HomeAssistant instance with a specific switch.
-// TODO(ssafty): NewHomeAssistant should send a query status GET request to
-// homeassistant to verify that the token/ip are correct.
+// TODO(ssafty): NewHomeAssistant should send on creation a query status
+// GET request to homeassistant to verify that the token/ip are correct.
 func NewHomeAssistant(opts ...homeassistantOpt) (*homeassistant, error) {
 	ha := &homeassistant{}
 
