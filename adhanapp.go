@@ -53,7 +53,8 @@ func main() {
 	}
 
 	for {
-		// If Adhan is already playing, sleep for 5 minutes.
+		// If Adhan is already playing, sleep for 5 minutes. We should loop again after
+		// sleep duration to turn off the speakers.
 		if adhanPlayer.IsPlaying() {
 			sleep(FIVE_MINUTES)
 			continue
@@ -65,13 +66,9 @@ func main() {
 			log.Fatalf("Failed to retrieve Prayer times: %v", err)
 		}
 
-		TimeFromLastPrayer, err := times.TimeFromLastPrayer(now)
+		TimeFromLastPrayer, timeToNextPrayer, err := times.TimesToNearestPrayers(now)
 		if err != nil {
-			log.Fatalf("Failed to get time from Last Prayer: %v", err)
-		}
-		timeToNextPrayer, err := times.TimeToNextPrayer(now)
-		if err != nil {
-			log.Fatalf("Failed to get time to Next Prayer: %v", err)
+			log.Fatalf("Failed to get TimesToNearestPrayers: %v", err)
 		}
 		log.Printf("Time left till next prayer: %v", timeToNextPrayer)
 
@@ -82,10 +79,14 @@ func main() {
 			if _, err := homeassistant.TurnSwitchOn(); err != nil {
 				log.Fatalf("error making a switch action: %v", err)
 			}
+
+			// give chance for the speaker to turn on before playing.
 			sleep(FIVE_SECONDS)
+
 			if err := adhanPlayer.Play(); err != nil {
 				log.Fatalf("error playing the Adhan: %v", err)
 			}
+
 		// Turn off speakers and Sleep till 5 minutes before next Prayer.
 		case timeToNextPrayer > FIVE_MINUTES:
 			if _, err := homeassistant.TurnSwitchOff(); err != nil {

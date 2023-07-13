@@ -34,10 +34,6 @@ func NewPrayerTimes() (*prayerTimes, error) {
 	return nil, errors.New("Unimplemented.")
 }
 
-func (p *prayerTimes) TimeToNextPrayer(ts time.Time) (time.Duration, error) {
-	return 0, errors.New("Unimplemented.")
-}
-
-func (p *prayerTimes) TimeFromLastPrayer(ts time.Time) (time.Duration, error) {
-	return 0, errors.New("Unimplemented.")
+func (p *prayerTimes) TimesToNearestPrayers(ts time.Time) (time.Duration, time.Duration, error) {
+	return 0, 0, errors.New("Unimplemented.")
 }
