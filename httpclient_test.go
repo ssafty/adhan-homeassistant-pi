@@ -15,14 +15,18 @@
 package main
 
 import (
+	"bytes"
 	"errors"
+	"io/ioutil"
 	"net/http"
 	"testing"
 )
 
 type httpclientMock struct {
+	err bool
+
 	statusCode int
-	err        bool
+	resp       string
 }
 
 func (c *httpclientMock) Do(req *http.Request) (*http.Response, error) {
@@ -30,8 +34,11 @@ func (c *httpclientMock) Do(req *http.Request) (*http.Response, error) {
 		return nil, errors.New("error")
 	}
 
+	reader := ioutil.NopCloser(bytes.NewReader([]byte(c.resp)))
+
 	return &http.Response{
 		StatusCode: c.statusCode,
+		Body:       reader,
 	}, nil
 }
 
@@ -46,5 +53,27 @@ func TestInvalidSendReq(t *testing.T) {
 	}
 	if _, _, err := c.Post("test-address", map[string]string{"test": "test"}); err == nil {
 		t.Errorf("Server side errors should be propagated. want err, got nil")
+	}
+}
+
+func TestValidSendReq(t *testing.T) {
+	httpClient := &httpclientMock{statusCode: 200, resp: `{"key": "value"}`}
+	c := &httpclient{
+		client: httpClient,
+		token:  "test-token",
+	}
+	switch _, code, err := c.Get("test-address"); {
+	case err != nil:
+		t.Fatalf("httpClient Get request should succeed. got err: %v", err)
+
+	case code != 200:
+		t.Errorf("httpClient Get request didn't return correct statusCode. got %v want %v", code, 200)
+	}
+
+	switch _, code, err := c.Post("test-address", map[string]string{"test": "test"}); {
+	case err != nil:
+		t.Fatalf("httpClient Post request should succeed. got err: %v", err)
+	case code != 200:
+		t.Errorf("httpClient Post request didn't return correct statusCode. got %v want %v", code, 200)
 	}
 }
