@@ -24,6 +24,13 @@ var (
 	speakerID           = flag.String("speaker_id", "Unimplemented", "Id of the speaker in home assistant.")
 	homeassistantIp     = flag.String("homeassistant_ip", "Unimplemented", "Ip of the local home assistant instance.")
 	homeeassistantToken = flag.String("homeassistant_token", "Unimplemented", "Autherization token for home assistant.")
+	adhan_mp3_fpath     = flag.String("adhan_mp3_fpath", "", "Path to the Adhan mp3 file e.g. /Users/userA/adhan.mp3")
+)
+
+const (
+	SAMPLE_RATE     = 44100
+	NUM_CHANNELS    = 2
+	AUDIO_BIT_DEPTH = 2
 )
 
 const (
@@ -47,7 +54,12 @@ func main() {
 		log.Fatalf("Failed to initialize NewHomeAssistant: %v", err)
 	}
 
-	adhanPlayer, err := NewAdhanPlayer()
+	adhanPlayer, err := NewAdhanPlayer(
+		FilePath(*adhan_mp3_fpath),
+		SamplingRate(SAMPLE_RATE),
+		NumChannels(NUM_CHANNELS),
+		AudioBitDepth(AUDIO_BIT_DEPTH),
+	)
 	if err != nil {
 		log.Fatalf("Failed to initialize NewAdhanPlayer: %v", err)
 	}
