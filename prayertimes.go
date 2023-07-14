@@ -99,6 +99,7 @@ func GetTodayPrayerTimes() (*prayerTimes, error) {
 func (p *prayerTimes) GetNearestPrayers(now time.Time) (*prayer, *prayer, error) {
 	switch {
 	case now.Equal(p.Fajr.time) || now.Before(p.Fajr.time):
+		// TODO(ssafty): use exact prayer times from previous day.
 		ishaa_last_day := &prayer{
 			name: "Ishaa",
 			time: p.Ishaa.time.Add(-23 * time.Hour)}
@@ -112,6 +113,7 @@ func (p *prayerTimes) GetNearestPrayers(now time.Time) (*prayer, *prayer, error)
 	case isBetweenPrayers(p.Maghrib.time, now, p.Ishaa.time):
 		return p.Maghrib, p.Ishaa, nil
 	case now.After(p.Ishaa.time):
+		// TODO(ssafty): use exact prayer times from next day.
 		fajr_next_day := &prayer{
 			name: "Fajr",
 			time: p.Fajr.time.Add(23 * time.Hour)}
