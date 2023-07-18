@@ -74,23 +74,24 @@ func main() {
 			sleep(FIVE_MINUTES)
 			continue
 		}
+
 		now := time.Now()
-
-		times, err := NewPrayerTimes()
+		prayertimes, err := GetTodayPrayerTimes()
 		if err != nil {
-			log.Fatalf("Failed to retrieve Prayer times: %v", err)
+			log.Fatalf("Failed to retrieve Prayer times today: %v", err)
 		}
-
-		TimeFromLastPrayer, timeToNextPrayer, err := times.TimesToNearestPrayers(now)
+		prevPrayer, nextPrayer, err := prayertimes.GetNearestPrayers(now)
 		if err != nil {
 			log.Fatalf("Failed to get TimesToNearestPrayers: %v", err)
 		}
-		log.Printf("Time left till next prayer: %v", timeToNextPrayer)
+		timeFromPrevPrayer := prevPrayer.TimeToPrayer(now)
+		timeToNextPrayer := nextPrayer.TimeToPrayer(now)
+		log.Printf("Time left till next prayer(%v): %v", nextPrayer, timeToNextPrayer)
 
 		switch {
 		// Play the Adhan (1) If time for prayer or (2) the last prayer was less than
 		// 2 minutes ago and Adhan did not play yet.
-		case TimeFromLastPrayer < TWO_MINUTES || timeToNextPrayer == 0:
+		case timeFromPrevPrayer < TWO_MINUTES || timeToNextPrayer == 0:
 			if _, err := homeassistant.TurnSwitchOn(); err != nil {
 				log.Fatalf("error making a switch action: %v", err)
 			}
