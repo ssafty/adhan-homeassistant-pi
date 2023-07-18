@@ -21,7 +21,7 @@ import (
 )
 
 var (
-	speakerID           = flag.String("speaker_id", "Unimplemented", "Id of the speaker in home assistant.")
+	speakerSwitchID     = flag.String("switch_id", "Unimplemented", "Id of the speaker switch in home assistant.")
 	homeassistantIp     = flag.String("homeassistant_ip", "Unimplemented", "Ip of the local home assistant instance.")
 	homeeassistantToken = flag.String("homeassistant_token", "Unimplemented", "Autherization token for home assistant.")
 )
@@ -42,7 +42,10 @@ func sleep(t time.Duration) {
 func main() {
 	flag.Parse()
 
-	homeassistant, err := NewHomeAssistant()
+	homeassistant, err := NewHomeAssistant(
+		HTTPClient(NewHTTPClient(*homeeassistantToken)),
+		SwitchID(*speakerSwitchID),
+		IPAddress(*homeassistantIp))
 	if err != nil {
 		log.Fatalf("Failed to initialize NewHomeAssistant: %v", err)
 	}
