@@ -50,7 +50,9 @@ func NewAutomation(ap *adhanPlayer, ha *homeassistant, pa *munichPrayerTimes) (*
 	return &automation{ap, ha, pa}, nil
 }
 
-// returns sleep amount
+// RunAndSleep (1) takes decision based on the daily prayer times and current timestamp
+// (2) plays the adhan and (3) switch on/off the speakers and (4) returns sleep amount for
+// the next iteration.
 func (a *automation) RunAndSleep(now time.Time) (time.Duration, error) {
 	if a.adhanPlayer.IsPlaying() {
 		return FIVE_MINUTES, nil

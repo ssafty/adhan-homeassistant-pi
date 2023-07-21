@@ -21,6 +21,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
+// Actions enum. Used by mocks to test the validity of the action sequences.
 const (
 	playAction = 1 << iota
 	isPlayingAction
@@ -135,7 +136,7 @@ func TestRunAndSleep(t *testing.T) {
 			wantActionSequence: []int{},
 		},
 		{
-			description: "7 minutes before Asr time should Sleep",
+			description: "7 minutes before Asr time should sleep 2 minutes (till 5 min before Asr)",
 			now:         parse("14:53"),
 
 			wantSleepDuration:  TWO_MINUTES,
