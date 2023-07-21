@@ -28,6 +28,11 @@ import (
 	"github.com/hajimehoshi/oto/v2"
 )
 
+type IAdhanPlayer interface {
+	Play() error
+	IsPlaying() bool
+}
+
 type adhanPlayer struct {
 	player oto.Player
 
@@ -119,12 +124,4 @@ func (a *adhanPlayer) IsPlaying() bool {
 		return true
 	}
 	return false
-}
-
-func (a *adhanPlayer) Stop() error {
-	err := a.player.Close()
-	if err != nil {
-		return fmt.Errorf("AdhanPlayer closing failed: %w", err)
-	}
-	return nil
 }

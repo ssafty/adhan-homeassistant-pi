@@ -33,14 +33,6 @@ const (
 	AUDIO_BIT_DEPTH = 2
 )
 
-const (
-	FIVE_SECONDS = 5 * time.Second
-
-	ONE_MINUTE   = 1 * time.Minute
-	TWO_MINUTES  = 2 * time.Minute
-	FIVE_MINUTES = 5 * time.Minute
-)
-
 func sleep(t time.Duration) {
 	log.Printf("Sleeping for %v", t)
 	time.Sleep(t)
@@ -67,51 +59,22 @@ func main() {
 		log.Fatalf("Failed to initialize NewAdhanPlayer: %v", err)
 	}
 
+	prayerTimes, err := NewMunichPrayerTimes()
+	if err != nil {
+		log.Fatalf("Failed to initialize NewPrayerTimes: %v", err)
+	}
+
+	automation, err := NewAutomation(adhanPlayer, homeassistant, prayerTimes)
+	if err != nil {
+		log.Fatalf("Failed to initialize NewAutomation: %v", err)
+	}
+
 	for {
-		// If Adhan is already playing, sleep for 5 minutes. We should loop again after
-		// sleep duration to turn off the speakers.
-		if adhanPlayer.IsPlaying() {
-			sleep(FIVE_MINUTES)
-			continue
-		}
-
-		now := time.Now()
-		prayertimes, err := NewMunichPrayerTimes()
+		sleepDuration, err := automation.RunAndSleep(time.Now())
 		if err != nil {
-			log.Fatalf("Failed to retrieve Prayer times today: %v", err)
+			log.Fatalf("Running the automation failed: %v", err)
 		}
-		prevPrayer, nextPrayer, err := prayertimes.GetNearestPrayers(now)
-		if err != nil {
-			log.Fatalf("Failed to get TimesToNearestPrayers: %v", err)
-		}
-		timeFromPrevPrayer := prevPrayer.TimeToPrayer(now)
-		timeToNextPrayer := nextPrayer.TimeToPrayer(now)
-		log.Printf("Time left till next prayer(%v): %v", nextPrayer, timeToNextPrayer)
 
-		switch {
-		// Play the Adhan (1) If time for prayer or (2) the last prayer was less than
-		// 2 minutes ago and Adhan did not play yet.
-		case timeFromPrevPrayer < TWO_MINUTES || timeToNextPrayer == 0:
-			if _, err := homeassistant.TurnSwitchOn(); err != nil {
-				log.Fatalf("error making a switch action: %v", err)
-			}
-
-			// give chance for the speaker to turn on before playing.
-			sleep(FIVE_SECONDS)
-
-			if err := adhanPlayer.Play(); err != nil {
-				log.Fatalf("error playing the Adhan: %v", err)
-			}
-
-		// Turn off speakers and Sleep till 5 minutes before next Prayer.
-		case timeToNextPrayer > FIVE_MINUTES:
-			if _, err := homeassistant.TurnSwitchOff(); err != nil {
-				log.Fatalf("error making a switch action: %v", err)
-			}
-			log.Printf("Next prayer: %v", timeToNextPrayer)
-			sleep(timeToNextPrayer - FIVE_MINUTES)
-		default:
-			sleep(ONE_MINUTE)
-		}
+		sleep(sleepDuration)
 	}
 }

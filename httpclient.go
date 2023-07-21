@@ -25,13 +25,13 @@ import (
 	"strings"
 )
 
-// clientInterface is used for mocking Do().
-type clientInterface interface {
+// iClient is used for mocking Do() in unit tests.
+type iClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
 type httpclient struct {
-	client clientInterface
+	client iClient
 	token  string
 }
 
