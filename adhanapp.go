@@ -76,7 +76,7 @@ func main() {
 		}
 
 		now := time.Now()
-		prayertimes, err := GetTodayPrayerTimes()
+		prayertimes, err := NewMunichPrayerTimes()
 		if err != nil {
 			log.Fatalf("Failed to retrieve Prayer times today: %v", err)
 		}

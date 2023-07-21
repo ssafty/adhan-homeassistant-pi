@@ -24,7 +24,7 @@ import (
 )
 
 // source: https://www.islamisches-zentrum-muenchen.de/
-var munichYearly = [][]string{
+var munich2023 = [][]string{
 	{"06:10", "07:59", "12:22", "14:15", "16:35", "18:17", "06:11", "07:59", "12:23", "14:15", "16:36", "18:18", "06:11", "07:59", "12:23", "14:16", "16:37", "18:19", "06:11", "07:59", "12:23", "14:17", "16:38", "18:20", "06:11", "07:59", "12:24", "14:18", "16:39", "18:21", "06:11", "07:59", "12:24", "14:19", "16:40", "18:22", "06:10", "07:58", "12:25", "14:20", "16:41", "18:23", "06:10", "07:58", "12:25", "14:21", "16:42", "18:24", "06:10", "07:58", "12:26", "14:22", "16:44", "18:25", "06:10", "07:57", "12:26", "14:23", "16:45", "18:26", "06:10", "07:57", "12:26", "14:24", "16:46", "18:27", "06:09", "07:56", "12:27", "14:26", "16:47", "18:28", "06:09", "07:56", "12:27", "14:27", "16:49", "18:29", "06:09", "07:55", "12:28", "14:28", "16:50", "18:30", "06:08", "07:54", "12:28", "14:29", "16:51", "18:32", "06:08", "07:54", "12:28", "14:30", "16:53", "18:33", "06:07", "07:53", "12:29", "14:31", "16:54", "18:34", "06:07", "07:52", "12:29", "14:33", "16:56", "18:35", "06:06", "07:51", "12:29", "14:34", "16:57", "18:36", "06:05", "07:51", "12:30", "14:35", "16:59", "18:38", "06:05", "07:50", "12:30", "14:36", "17:00", "18:39", "06:04", "07:49", "12:30", "14:38", "17:02", "18:40", "06:03", "07:48", "12:30", "14:39", "17:03", "18:41", "06:03", "07:47", "12:31", "14:40", "17:05", "18:43", "06:02", "07:46", "12:31", "14:41", "17:06", "18:44", "06:01", "07:45", "12:31", "14:43", "17:08", "18:45", "06:00", "07:44", "12:31", "14:44", "17:09", "18:47", "05:59", "07:42", "12:32", "14:45", "17:11", "18:48", "05:58", "07:41", "12:32", "14:47", "17:12", "18:49", "05:57", "07:40", "12:32", "14:48", "17:14", "18:51", "05:56", "07:39", "12:32", "14:49", "17:16", "18:52"},
 	{"05:55", "07:37", "12:32", "14:51", "17:17", "18:53", "05:54", "07:36", "12:32", "14:52", "17:19", "18:55", "05:53", "07:35", "12:32", "14:53", "17:20", "18:56", "05:52", "07:33", "12:33", "14:54", "17:22", "18:58", "05:50", "07:32", "12:33", "14:56", "17:24", "18:59", "05:49", "07:30", "12:33", "14:57", "17:25", "19:00", "05:48", "07:29", "12:33", "14:58", "17:27", "19:02", "05:47", "07:27", "12:33", "15:00", "17:28", "19:03", "05:45", "07:26", "12:33", "15:01", "17:30", "19:05", "05:44", "07:24", "12:33", "15:02", "17:32", "19:06", "05:42", "07:23", "12:33", "15:03", "17:33", "19:07", "05:41", "07:21", "12:33", "15:05", "17:35", "19:09", "05:40", "07:19", "12:33", "15:06", "17:36", "19:10", "05:38", "07:18", "12:33", "15:07", "17:38", "19:12", "05:37", "07:16", "12:33", "15:08", "17:40", "19:13", "05:35", "07:14", "12:33", "15:10", "17:41", "19:15", "05:33", "07:13", "12:33", "15:11", "17:43", "19:16", "05:32", "07:11", "12:33", "15:12", "17:44", "19:18", "05:30", "07:09", "12:33", "15:13", "17:46", "19:19", "05:28", "07:07", "12:32", "15:15", "17:48", "19:21", "05:27", "07:06", "12:32", "15:16", "17:49", "19:22", "05:25", "07:04", "12:32", "15:17", "17:51", "19:23", "05:23", "07:02", "12:32", "15:18", "17:52", "19:25", "05:22", "07:00", "12:32", "15:19", "17:54", "19:26", "05:20", "06:58", "12:32", "15:20", "17:55", "19:28", "05:18", "06:56", "12:32", "15:21", "17:57", "19:29", "05:16", "06:54", "12:32", "15:23", "17:59", "19:31", "05:14", "06:53", "12:31", "15:24", "18:00", "19:32"},
 	{"05:12", "06:51", "12:31", "15:25", "18:02", "19:34", "05:10", "06:49", "12:31", "15:26", "18:03", "19:36", "05:08", "06:47", "12:31", "15:27", "18:05", "19:37", "05:06", "06:45", "12:31", "15:28", "18:06", "19:39", "05:04", "06:43", "12:30", "15:29", "18:08", "19:40", "05:02", "06:41", "12:30", "15:30", "18:09", "19:42", "05:00", "06:39", "12:30", "15:31", "18:11", "19:43", "04:58", "06:37", "12:30", "15:32", "18:12", "19:45", "04:56", "06:35", "12:29", "15:33", "18:14", "19:46", "04:54", "06:33", "12:29", "15:34", "18:15", "19:48", "04:52", "06:31", "12:29", "15:35", "18:17", "19:49", "04:50", "06:29", "12:29", "15:36", "18:18", "19:51", "04:48", "06:27", "12:28", "15:37", "18:20", "19:53", "04:46", "06:25", "12:28", "15:38", "18:21", "19:54", "04:43", "06:23", "12:28", "15:39", "18:23", "19:56", "04:41", "06:21", "12:28", "15:40", "18:24", "19:57", "04:39", "06:19", "12:27", "15:41", "18:26", "19:59", "04:37", "06:17", "12:27", "15:42", "18:27", "20:01", "04:35", "06:15", "12:27", "15:42", "18:29", "20:02", "04:32", "06:12", "12:26", "15:43", "18:30", "20:04", "04:30", "06:10", "12:26", "15:44", "18:32", "20:06", "04:28", "06:08", "12:26", "15:45", "18:33", "20:07", "04:25", "06:06", "12:25", "15:46", "18:35", "20:09", "04:23", "06:04", "12:25", "15:47", "18:36", "20:11", "04:21", "06:02", "12:25", "15:48", "18:38", "20:12", "05:18", "07:00", "13:25", "16:48", "19:39", "21:18", "05:16", "06:58", "13:24", "16:49", "19:40", "21:16", "05:14", "06:56", "13:24", "16:50", "19:42", "21:18", "05:11", "06:54", "13:24", "16:51", "19:43", "21:19", "05:09", "06:52", "13:23", "16:51", "19:45", "21:21", "05:06", "06:50", "13:23", "16:52", "19:46", "21:23"},
@@ -44,6 +44,7 @@ type prayer struct {
 	time time.Time
 }
 
+// returns duration from now till an input prayer.
 func (p *prayer) TimeToPrayer(now time.Time) time.Duration {
 	if now.Compare(p.time) > 0 {
 		// prayer has passed
@@ -53,49 +54,25 @@ func (p *prayer) TimeToPrayer(now time.Time) time.Duration {
 	return p.time.Sub(now)
 }
 
+// IPrayerTimes is an interface to be used by specific cities or a global
+// prayer time calculator.
+type IPrayerTimes interface {
+	GetTodayPrayerTimes(now time.Time) error
+	GetNearestPrayers(now time.Time) (*prayer, *prayer, error)
+}
+
+// prayerTimes contains all 5 prayers and the date (yyyy-mm-dd) for caching.
 type prayerTimes struct {
 	Fajr    *prayer
 	Dhuhr   *prayer
 	Asr     *prayer
 	Maghrib *prayer
 	Ishaa   *prayer
+
+	date time.Time
 }
 
-func GetTodayPrayerTimes() (*prayerTimes, error) {
-	d := time.Now()
-
-	pts := []time.Time{}
-	for i := 0; i < 6; i++ {
-		parsed, err := time.Parse("15:04", munichYearly[d.Month()-1][6*(d.Day()-1)+i])
-		if err != nil {
-			return nil, err
-		}
-
-		tt := time.Date(d.Year(), d.Month(), d.Day(), parsed.Hour(), parsed.Minute(), 0, 0, d.Location())
-
-		if i == 1 {
-			// We don't consider Ishraq.
-			continue
-		}
-		pts = append(pts, tt)
-	}
-
-	pt := &prayerTimes{
-		Fajr:    &prayer{name: "Fajr", time: pts[0]},
-		Dhuhr:   &prayer{name: "Dhuhr", time: pts[1]},
-		Asr:     &prayer{name: "Asr", time: pts[2]},
-		Maghrib: &prayer{name: "Maghrib", time: pts[3]},
-		Ishaa:   &prayer{name: "Ishaa", time: pts[4]},
-	}
-
-	if !isSameDay(d, pt.Fajr.time, pt.Dhuhr.time, pt.Asr.time, pt.Maghrib.time, pt.Ishaa.time) {
-		return nil, fmt.Errorf("Failed to find time to closest prayer. Found Inconsistency of dates between now (%v) and today's prayers(%v)", d, pt)
-	}
-
-	log.Printf("PrayerTimes today: %v", pt)
-	return pt, nil
-}
-
+// GetNearestPrayers returns the previous and next *prayers given a timestamp.
 func (p *prayerTimes) GetNearestPrayers(now time.Time) (*prayer, *prayer, error) {
 	switch {
 	case now.Equal(p.Fajr.time) || now.Before(p.Fajr.time):
@@ -123,6 +100,57 @@ func (p *prayerTimes) GetNearestPrayers(now time.Time) (*prayer, *prayer, error)
 	}
 }
 
+// munichPrayerTimes extends prayerTimes to reuse GetNearestPrayers.
+type munichPrayerTimes struct {
+	prayerTimes
+}
+
+func NewMunichPrayerTimes() (*munichPrayerTimes, error) {
+	pt := &munichPrayerTimes{}
+	if err := pt.GetTodayPrayerTimes(time.Now()); err != nil {
+		return nil, fmt.Errorf("Error initializing NewPrayerTimes for %s: %w", time.Now().Format("2006-01-02"), err)
+	}
+	return pt, nil
+}
+
+// GetTodayPrayerTimes is specific to Munich as it reads from static prayer times.
+func (p *munichPrayerTimes) GetTodayPrayerTimes(now time.Time) error {
+	if !p.date.IsZero() && p.date == GetDate(now) {
+		return nil
+	}
+
+	pts := []time.Time{}
+	for i := 0; i < 6; i++ {
+		t := munich2023[now.Month()-1][6*(now.Day()-1)+i]
+		parsed, err := time.Parse("15:04", t)
+		if err != nil {
+			return fmt.Errorf("Error parsing prayertime %v: %w", t, err)
+		}
+
+		tt := time.Date(now.Year(), now.Month(), now.Day(), parsed.Hour(), parsed.Minute(), 0, 0, now.Location())
+
+		if i == 1 {
+			// We don't consider Ishraq.
+			continue
+		}
+		pts = append(pts, tt)
+	}
+
+	p.Fajr = &prayer{name: "Fajr", time: pts[0]}
+	p.Dhuhr = &prayer{name: "Dhuhr", time: pts[1]}
+	p.Asr = &prayer{name: "Asr", time: pts[2]}
+	p.Maghrib = &prayer{name: "Maghrib", time: pts[3]}
+	p.Ishaa = &prayer{name: "Ishaa", time: pts[4]}
+	p.date = GetDate(now)
+
+	if !isSameDay(now, p.Fajr.time, p.Dhuhr.time, p.Asr.time, p.Maghrib.time, p.Ishaa.time) {
+		return fmt.Errorf("Failed to find time to closest prayer. Found Inconsistency of dates between now (%v) and today's prayers(%v)", now, p)
+	}
+
+	log.Printf("PrayerTimes today: %v", p)
+	return nil
+}
+
 // isSameDay returns True if all input timestamps have the same date.
 func isSameDay(tss ...time.Time) bool {
 	if len(tss) < 2 {
@@ -139,11 +167,12 @@ func isSameDay(tss ...time.Time) bool {
 	return true
 }
 
-func midNight(ts time.Time) time.Time {
-	return time.Date(ts.Year(), ts.Month(), ts.Day(), 0, 0, 0, 0, ts.Location())
-}
-
 // isBetweenPrayers returns True if input timestamp is within prayerA and prayerB
 func isBetweenPrayers(prayerA, ts time.Time, prayerB time.Time) bool {
 	return ts.After(prayerA) && ts.Before(prayerB) || ts.Equal(prayerB)
+}
+
+// GetDate returns Date (yyyy-mm-dd) of a given timestamp.
+func GetDate(n time.Time) time.Time {
+	return time.Date(n.Year(), n.Month(), n.Day(), 0, 0, 0, 0, n.Location())
 }
