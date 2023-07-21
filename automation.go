@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// automation contains all the logic for adhan playing, waiting and rewinding.
+// automation is the decision maker and actuator for adhan playing, waiting and
+// controlling home assistant switches.
 
 package main
 
