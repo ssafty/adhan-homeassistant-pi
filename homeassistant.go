@@ -32,6 +32,11 @@ const (
 	STATUS  SwitchAction = "/api/states/"
 )
 
+type IHomeAssistant interface {
+	TurnSwitchOn() (string, error)
+	TurnSwitchOff() (string, error)
+}
+
 type homeassistant struct {
 	client *httpclient
 
