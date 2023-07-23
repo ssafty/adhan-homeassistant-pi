@@ -56,6 +56,29 @@ func (c *homeassistantHttpClientMock) Do(req *http.Request) (*http.Response, err
 	}, nil
 }
 
+func TestValidNewHomeAssistant(t *testing.T) {
+	h, err := NewHomeAssistant(
+		HTTPClient(&httpclient{
+			client: &homeassistantHttpClientMock{
+				ip:        validIp,
+				authToken: validAuthToken,
+				switchId:  validSwitchId,
+			},
+			token: validAuthToken,
+		}),
+		IPAddress(validIp),
+		SwitchID(validSwitchId))
+	if err != nil {
+		t.Fatalf("NewHomeAssistant with valid arguments should raise no errors. Got %v", err)
+	}
+	if _, err := h.TurnSwitchOff(); err != nil {
+		t.Fatalf("NewHomeAssistant turn switch off action expect no errors. Got %v", err)
+	}
+	if _, err := h.TurnSwitchOn(); err != nil {
+		t.Fatalf("NewHomeAssistant turn switch on action expect no errors. Got %v", err)
+	}
+}
+
 func TestInvalidNewHomeAssistant(t *testing.T) {
 	for _, test := range []struct {
 		description string
@@ -111,28 +134,5 @@ func TestInvalidNewHomeAssistant(t *testing.T) {
 				t.Errorf("NewHomeAssistant should raise an input validation error. Got none.")
 			}
 		})
-	}
-}
-
-func TestValidNewHomeAssistant(t *testing.T) {
-	h, err := NewHomeAssistant(
-		HTTPClient(&httpclient{
-			client: &homeassistantHttpClientMock{
-				ip:        validIp,
-				authToken: validAuthToken,
-				switchId:  validSwitchId,
-			},
-			token: validAuthToken,
-		}),
-		IPAddress(validIp),
-		SwitchID(validSwitchId))
-	if err != nil {
-		t.Fatalf("NewHomeAssistant with valid arguments should raise no errors. Got %v", err)
-	}
-	if _, err := h.TurnSwitchOff(); err != nil {
-		t.Fatalf("NewHomeAssistant turn switch off action expect no errors. Got %v", err)
-	}
-	if _, err := h.TurnSwitchOn(); err != nil {
-		t.Fatalf("NewHomeAssistant turn switch on action expect no errors. Got %v", err)
 	}
 }
