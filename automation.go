@@ -36,9 +36,21 @@ type automation struct {
 	adhanPlayer   IAdhanPlayer
 	homeassistant IHomeAssistant
 	prayerTimes   IPrayerTimes
+
+	// time to wait for the speakers to turn on
+	// before playing adhan.
+	speakerPause *time.Duration
 }
 
-func NewAutomation(ap *adhanPlayer, ha *homeassistant, pa *munichPrayerTimes) (*automation, error) {
+type AutomationOpt func(*automation)
+
+func SpeakerPause(d *time.Duration) AutomationOpt {
+	return func(a *automation) {
+		a.speakerPause = d
+	}
+}
+
+func NewAutomation(ap *adhanPlayer, ha *homeassistant, pa *munichPrayerTimes, opts ...AutomationOpt) (*automation, error) {
 	if ap == nil {
 		return nil, errors.New("Automation expects a non-nil AdhanPlayer.")
 	}
@@ -48,7 +60,16 @@ func NewAutomation(ap *adhanPlayer, ha *homeassistant, pa *munichPrayerTimes) (*
 	if pa == nil {
 		return nil, errors.New("Automation expects a non-nil PrayerTimes instance.")
 	}
-	return &automation{ap, ha, pa}, nil
+
+	a := &automation{ap, ha, pa, nil}
+	for _, opt := range opts {
+		opt(a)
+	}
+
+	if a.speakerPause == nil || *a.speakerPause <= 0 {
+		return nil, errors.New("Automation expects a non-nil positive speaker pause duration.")
+	}
+	return a, nil
 }
 
 // RunAndSleep (1) takes decision based on the daily prayer times and current timestamp
@@ -81,7 +102,7 @@ func (a *automation) RunAndSleep(now time.Time) (time.Duration, error) {
 		}
 
 		// give chance for the speaker to turn on before playing.
-		sleep(FIVE_SECONDS)
+		sleep(*a.speakerPause)
 
 		if err := a.adhanPlayer.Play(); err != nil {
 			return 0, fmt.Errorf("error playing the Adhan: %w", err)
