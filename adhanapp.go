@@ -21,10 +21,11 @@ import (
 )
 
 var (
-	speakerSwitchID     = flag.String("switch_id", "Unimplemented", "Id of the speaker switch in home assistant.")
-	homeassistantIp     = flag.String("homeassistant_ip", "Unimplemented", "Ip of the local home assistant instance.")
-	homeeassistantToken = flag.String("homeassistant_token", "Unimplemented", "Autherization token for home assistant.")
-	adhan_mp3_fpath     = flag.String("adhan_mp3_fpath", "", "Path to the Adhan mp3 file e.g. /Users/userA/adhan.mp3")
+	speakerSwitchID        = flag.String("switch_id", "Unimplemented", "Id of the speaker switch in home assistant.")
+	homeassistantIp        = flag.String("homeassistant_ip", "Unimplemented", "Ip of the local home assistant instance.")
+	homeeassistantToken    = flag.String("homeassistant_token", "Unimplemented", "Autherization token for home assistant.")
+	adhan_mp3_fpath        = flag.String("adhan_mp3_fpath", "", "Path to the Adhan mp3 file e.g. /Users/userA/adhan.mp3")
+	speaker_pause_duration = flag.Duration("speaker_pause", 10*time.Second, "Waiting period between switching on the speaker and playing adhan (default: 10 seconds).")
 )
 
 const (
@@ -64,7 +65,7 @@ func main() {
 		log.Fatalf("Failed to initialize NewPrayerTimes: %v", err)
 	}
 
-	automation, err := NewAutomation(adhanPlayer, homeassistant, prayerTimes)
+	automation, err := NewAutomation(adhanPlayer, homeassistant, prayerTimes, SpeakerPause(speaker_pause_duration))
 	if err != nil {
 		log.Fatalf("Failed to initialize NewAutomation: %v", err)
 	}

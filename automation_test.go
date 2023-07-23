@@ -152,7 +152,8 @@ func TestRunAndSleep(t *testing.T) {
 			a := automation{
 				&adhanPlayerMock{forcePlay: test.forcePlay, actionLogger: &actions},
 				&homeassistantMock{actionLogger: &actions},
-				&prayerTimesMock{}}
+				&prayerTimesMock{},
+				func() *time.Duration { d := time.Duration(0 * time.Second); return &d }()}
 
 			sleepDuration, err := a.RunAndSleep(test.now)
 			if err != nil {
@@ -162,7 +163,7 @@ func TestRunAndSleep(t *testing.T) {
 				t.Errorf("RunAndSleep sleep duration mismatch. Got %v, want %v", sleepDuration, test.wantSleepDuration)
 			}
 			if !cmp.Equal(actions, test.wantActionSequence) {
-				t.Errorf("RunAndSleep sleep action seqeuence mismatch. Got %v, want %v", actions, test.wantActionSequence)
+				t.Errorf("RunAndSleep sleep action sequence mismatch. Got %v, want %v", actions, test.wantActionSequence)
 			}
 		})
 	}
@@ -182,12 +183,13 @@ func TestRunAndSleepIntegration(t *testing.T) {
 	maxActions := 60
 
 	gotActions := []int{}
-	gotTotalSleep := time.Second * 0
+	gotTotalSleep := time.Minute * 0
 
 	a := automation{
 		&adhanPlayerMock{isPlaying: false, actionLogger: &gotActions},
 		&homeassistantMock{actionLogger: &gotActions},
-		&prayerTimesMock{}}
+		&prayerTimesMock{},
+		func() *time.Duration { d := time.Duration(0 * time.Second); return &d }()}
 
 	for i := 0; i < maxActions; i++ {
 		sleepDuration, err := a.RunAndSleep(startingTime)
@@ -210,7 +212,7 @@ func TestRunAndSleepIntegration(t *testing.T) {
 		aTurnSwitchOn, aPlay, aIsPlaying, aTurnSwitchOff,
 		aTurnSwitchOn, aPlay, aIsPlaying, aTurnSwitchOff,
 	}; !cmp.Equal(gotActions, wantActionSequence) {
-		t.Errorf("RunAndSleep sleep action seqeuence mismatch. Got %v, want %v", gotActions, wantActionSequence)
+		t.Errorf("RunAndSleep sleep action sequence mismatch. Got %v, want %v", gotActions, wantActionSequence)
 	}
 
 	// sleep(7h51min) = time.now("01:04") - fajr time - 5 minutes.
@@ -221,8 +223,8 @@ func TestRunAndSleepIntegration(t *testing.T) {
 	// Next day, We are 1 hour away from Fajr - 5 minutes. sleep(1 hour).
 	// repeat (a) and (b) for two more prayers.
 	// sleep(1 minute) * 2 at the end as we reached our decisions limit.
-	if want := 37*time.Hour + 53*time.Minute; cmp.Equal(gotTotalSleep, want) {
-		t.Errorf("RunAndSleep sleep action seqeuence mismatch. Got %v, want %v", gotTotalSleep, want)
+	if want := 37*time.Hour + 53*time.Minute; gotTotalSleep != want {
+		t.Errorf("RunAndSleep total sleep duration mismatch. Got %v, want %v", gotTotalSleep, want)
 	}
 }
 
@@ -232,21 +234,38 @@ func TestNewAutomation(t *testing.T) {
 		ha          *homeassistant
 		ap          *adhanPlayer
 		pt          *munichPrayerTimes
+		pause       time.Duration
 	}{
 		{
 			description: "Homeassistant is missing",
 			ap:          &adhanPlayer{},
 			pt:          &munichPrayerTimes{},
+			pause:       time.Second,
 		},
 		{
 			description: "AdhanPlayer is missing",
 			ha:          &homeassistant{},
 			pt:          &munichPrayerTimes{},
+			pause:       time.Second,
 		},
 		{
 			description: "MunichPrayerTimes is missing",
 			ap:          &adhanPlayer{},
 			ha:          &homeassistant{},
+			pause:       time.Second,
+		},
+		{
+			description: "Speaker pause is missing",
+			ap:          &adhanPlayer{},
+			pt:          &munichPrayerTimes{},
+			ha:          &homeassistant{},
+		},
+		{
+			description: "Speaker pause is negative",
+			ap:          &adhanPlayer{},
+			pt:          &munichPrayerTimes{},
+			ha:          &homeassistant{},
+			pause:       -1 * time.Second,
 		},
 	} {
 		t.Run(test.description, func(t *testing.T) {
