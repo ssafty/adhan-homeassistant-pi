@@ -1,0 +1,16 @@
+version: '3'
+services:
+  adhan-homeassistant-pi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      tags:
+        - "adhan-homeassistant-pi-image:latest"
+    container_name: adhan-homeassistant-pi
+    image: "docker.io/library/adhan-homeassistant-pi-image:latest"
+    environment:
+      switch_id:  # ADD ME
+      homeassistant_ip:  localhost:8123 # CHANGE ME
+      homeassistant_token:  # ADD ME
+      adhan_mp3_fpath:  # ADD ME
+    restart: on-failure:5

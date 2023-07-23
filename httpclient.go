@@ -37,7 +37,8 @@ type httpclient struct {
 
 func NewHTTPClient(token string) *httpclient {
 	return &httpclient{
-		token: token,
+		client: http.DefaultClient,
+		token:  token,
 	}
 }
 
