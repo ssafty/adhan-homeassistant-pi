@@ -19,6 +19,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -43,7 +44,12 @@ func NewHTTPClient(token string) *httpclient {
 }
 
 func (c *httpclient) sendReq(req *http.Request, token string) (string, int, error) {
+	if req == nil {
+		return "", 0, errors.New("sendReq received a nil req (*http.Request)")
+	}
+
 	req.Header.Add("Authorization", "Bearer "+token)
+
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return "", 0, fmt.Errorf("received an error on response for req %v: %w", req, err)
