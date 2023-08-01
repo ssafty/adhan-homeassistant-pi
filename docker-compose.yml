@@ -10,7 +10,7 @@ services:
     image: "docker.io/library/adhan-homeassistant-pi-image:latest"
     environment:
       switch_id:  # ADD ME
-      homeassistant_ip:  localhost:8123 # CHANGE ME
+      homeassistant_ip:  http://192.168.178.58:8123 # CHANGE ME
       homeassistant_token:  # ADD ME
       adhan_mp3_fpath:  # ADD ME
     restart: on-failure:5
