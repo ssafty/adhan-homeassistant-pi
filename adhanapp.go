@@ -15,15 +15,16 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"log"
 	"time"
 )
 
 var (
-	speakerSwitchID        = flag.String("switch_id", "Unimplemented", "Id of the speaker switch in home assistant.")
-	homeassistantIp        = flag.String("homeassistant_ip", "Unimplemented", "Ip of the local home assistant instance.")
-	homeeassistantToken    = flag.String("homeassistant_token", "Unimplemented", "Autherization token for home assistant.")
+	speakerSwitchID        = flag.String("switch_id", "", "Id of the speaker switch in home assistant.")
+	homeassistantIp        = flag.String("homeassistant_ip", "", "IP of the local home assistant instance.")
+	homeassistantToken     = flag.String("homeassistant_token", "", "Autherization token for home assistant.")
 	adhan_mp3_fpath        = flag.String("adhan_mp3_fpath", "", "Path to the Adhan mp3 file e.g. /Users/userA/adhan.mp3")
 	speaker_pause_duration = flag.Duration("speaker_pause", 10*time.Second, "Waiting period between switching on the speaker and playing adhan (default: 10 seconds).")
 )
@@ -39,11 +40,28 @@ func sleep(t time.Duration) {
 	time.Sleep(t)
 }
 
+func assertFlags() error {
+	switch {
+	case *speakerSwitchID == "":
+		return errors.New("switch_id flag is not set.")
+	case *homeassistantIp == "":
+		return errors.New("homeassistant_ip flag is not set.")
+	case *homeassistantToken == "":
+		return errors.New("homeassistant_token flag is not set.")
+	case *adhan_mp3_fpath == "":
+		return errors.New("adhan_mp3_fpath flag is not set.")
+	}
+	return nil
+}
+
 func main() {
 	flag.Parse()
+	if err := assertFlags(); err != nil {
+		log.Fatalf("Some flags are uninitialized: %v", err)
+	}
 
 	homeassistant, err := NewHomeAssistant(
-		HTTPClient(NewHTTPClient(*homeeassistantToken)),
+		HTTPClient(NewHTTPClient(*homeassistantToken)),
 		SwitchID(*speakerSwitchID),
 		IPAddress(*homeassistantIp))
 	if err != nil {

@@ -16,7 +16,13 @@ COPY *.go ./
 RUN apt update && apt install -y libasound2-dev && rm -rf /var/lib/apt/lists/*
 
 # Build
-RUN go build -o /adhan-pi
+RUN go build -o /adhan-homeassistant-pi
 
-# Run
-CMD [ "/adhan-pi" ]
+# Create a custom "exec mode" docker entrypoint to receive SIGTERM.
+# `docker-entrypoint.sh` is not populated in the docker file because it
+# requires --build-arg (build time variable replacement). Adding it to
+# the repository (i.e. ENV runtime) avoids the frustration from a 2 steps 
+# variables debugging process.
+COPY docker-entrypoint.sh ./
+RUN chmod 755 docker-entrypoint.sh 
+ENTRYPOINT [ "./docker-entrypoint.sh"]
