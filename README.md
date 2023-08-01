@@ -9,26 +9,29 @@ channel speakers, using raspberry pi's ~2W instead of having the speakers switch
 
 
 ## Hardware Setup
+<p align="center">
+  <img src=".github/hardware_setup.png?raw=true" alt="Diagram shows how to connect all components"/>
+</p>
+
+
 
 ### Components
 
-* Raspberry pi with auxillary i.e. any raspberry pi that is not Zero.
+* (Non-Zero) Raspberry pi with auxillary.
     * Micro SD Card reader.
     * Compatible USB power supply.
 * Zigbee Antenna e.g. SONOFF Zigbee 3.0 USB Dongle Plus,TI CC2652P + CP2102(N).
 * Zigbee compatible Smart Plug/Switch e.g. Innr SmartPlug Zigbee 3.0 Type F.
 * Old speakers with auxillary.
 
-### Setup
-
-![diagram shows how to connect all components](.github/hardware_setup.png)
+### Steps
 
 1. Connect the Zigbee Antenna to the raspberry pi via USB.
 2. Connect the speakers to the raspberry pi via aux.
 3. Connect the speakers to the Zigbee switch.
 
 
-## Setup
+## Installation
 
 Follow [setup from scratch](https://github.com/ssafty/adhan-homeassistant-pi/wiki#setup-from-scratch).
 
