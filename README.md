@@ -4,7 +4,7 @@
 
 This automation app runs Adhan 5 times a day by switching on the speakers before the
 adhan and switching them off directly after. It allows playing Adhan on multi 
-channel speakers, using raspberry pi's ~3W instead of having the speakers switched on 
+channel speakers, using raspberry pi's ~2W instead of having the speakers switched on 
 (~42W) for a long period of time. Proposal design doc: [here](https://docs.google.com/document/d/1jaiPn7vfulNgkbaxgMCdkzdQyKv2k5WcBebXyMKO92E/edit#heading=h.tgmxtralkmm7).
 
 
