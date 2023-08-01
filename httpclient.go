@@ -43,6 +43,7 @@ func NewHTTPClient(token string) *httpclient {
 }
 
 func (c *httpclient) sendReq(req *http.Request, token string) (string, int, error) {
+	req.Header.Add("Authorization", "Bearer "+token)
 	resp, err := c.client.Do(req)
 	if err != nil {
 		return "", 0, fmt.Errorf("received an error on response for req %v: %w", req, err)
