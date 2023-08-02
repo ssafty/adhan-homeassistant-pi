@@ -7,7 +7,7 @@ adhan and switching them off directly after. It allows playing Adhan on multi
 channel speakers, using raspberry pi's ~2W instead of having the speakers switched on 
 (~42W) for a long period of time. Proposal design doc: [here](https://docs.google.com/document/d/1jaiPn7vfulNgkbaxgMCdkzdQyKv2k5WcBebXyMKO92E/edit#heading=h.tgmxtralkmm7).
 
-This is not (yet) a prayer times calculator. We are starting with **Munich, Germany**. 
+This is not (yet) a prayer times calculator. The project is currently supporting **Munich, Germany**. 
 
 ## Hardware Setup
 <p align="center">
