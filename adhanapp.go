@@ -25,7 +25,7 @@ var (
 	speakerSwitchID        = flag.String("switch_id", "", "Id of the speaker switch in home assistant.")
 	homeassistantIp        = flag.String("homeassistant_ip", "", "IP of the local home assistant instance.")
 	homeassistantToken     = flag.String("homeassistant_token", "", "Autherization token for home assistant.")
-	adhan_mp3_fpath        = flag.String("adhan_mp3_fpath", "", "Path to the Adhan mp3 file e.g. /Users/userA/adhan.mp3")
+	adhan_mp3_fpath        = flag.String("adhan_mp3_fpath", "adhan.mp3", "Path to the Adhan mp3 file e.g. /Users/userA/adhan.mp3")
 	speaker_pause_duration = flag.Duration("speaker_pause", 10*time.Second, "Waiting period between switching on the speaker and playing adhan (default: 10 seconds).")
 )
 
@@ -36,7 +36,7 @@ const (
 )
 
 func sleep(t time.Duration) {
-	log.Printf("Sleeping for %v", t)
+	log.Printf("Sleeping for %v until %v", t, time.Now().Add(t))
 	time.Sleep(t)
 }
 
@@ -48,8 +48,6 @@ func assertFlags() error {
 		return errors.New("homeassistant_ip flag is not set.")
 	case *homeassistantToken == "":
 		return errors.New("homeassistant_token flag is not set.")
-	case *adhan_mp3_fpath == "":
-		return errors.New("adhan_mp3_fpath flag is not set.")
 	}
 	return nil
 }
@@ -86,6 +84,10 @@ func main() {
 	automation, err := NewAutomation(adhanPlayer, homeassistant, prayerTimes, SpeakerPause(speaker_pause_duration))
 	if err != nil {
 		log.Fatalf("Failed to initialize NewAutomation: %v", err)
+	}
+
+	if err := automation.ValidateAllActions(); err != nil {
+		log.Fatalf("Failed to validate all actions: %v", err)
 	}
 
 	for {

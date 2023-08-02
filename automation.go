@@ -119,3 +119,25 @@ func (a *automation) RunAndSleep(now time.Time) (time.Duration, error) {
 
 	return ONE_MINUTE, nil
 }
+
+// ValidateAllActions turns on the speaker, play adhan and turns off the speakers afterwards.
+func (a *automation) ValidateAllActions() error {
+	if _, err := a.homeassistant.TurnSwitchOn(); err != nil {
+		return fmt.Errorf("error validating all actions during TurnSwitchOn: %w", err)
+	}
+
+	// give chance for the speaker to turn on before playing.
+	sleep(*a.speakerPause)
+
+	if err := a.adhanPlayer.Play(); err != nil {
+		return fmt.Errorf("error validating all actions during playing the Adhan: %w", err)
+	}
+
+	sleep(ONE_MINUTE)
+
+	if _, err := a.homeassistant.TurnSwitchOff(); err != nil {
+		return fmt.Errorf("error validating all actions during TurnSwitchOff: %w", err)
+	}
+
+	return nil
+}
