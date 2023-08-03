@@ -12,6 +12,9 @@ RUN go mod verify
 # https://docs.docker.com/engine/reference/builder/#copy
 COPY *.go ./
 
+# Copy the sample adhan.mp3 file. 
+COPY adhan.mp3 ./
+
 # install mp3 related dependencies
 RUN apt update && apt install -y libasound2-dev && rm -rf /var/lib/apt/lists/*
 

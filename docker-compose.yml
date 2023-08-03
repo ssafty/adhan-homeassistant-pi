@@ -26,5 +26,6 @@ services:
       switch_id:  ADD_ME
       homeassistant_ip:  ADD_ME # e.g. http://192.168.178.58:8123
       homeassistant_token:  ADD_ME
-      adhan_mp3_fpath:  ADD_ME
+    devices:
+      - /dev/snd  # For container sound.
     restart: on-failure:5
