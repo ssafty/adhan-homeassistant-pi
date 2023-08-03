@@ -16,7 +16,7 @@ This is not (yet) a prayer times calculator. The project is currently supporting
 
 ### Components
 
-* (Non-Zero) Raspberry pi with auxillary.
+* (Non-Zero) Raspberry pi with an auxillary port.
     * Micro SD Card reader.
     * Compatible USB power supply.
 * Zigbee Antenna e.g. SONOFF Zigbee 3.0 USB Dongle Plus,TI CC2652P + CP2102(N).
@@ -32,7 +32,7 @@ This is not (yet) a prayer times calculator. The project is currently supporting
 
 ## Installation
 
-Replace the provided sample `adhan.mp3` with your preferred Adhan (also named: `adhan.mp3`). 
+Replace the provided sample `adhan.mp3` with your preferred Adhan (rename it to: `adhan.mp3`). 
 
 ```sh
 # Via Docker.
