@@ -159,7 +159,7 @@ func (p *munichPrayerTimes) GetTodayPrayerTimes(now time.Time) error {
 		return fmt.Errorf("Failed to find time to closest prayer. Found Inconsistency of dates between now (%v) and today's prayers(%v)", now, p)
 	}
 
-	log.Printf("PrayerTimes today: %v", p)
+	log.Printf("PrayerTimes today: %v", *p)
 	return nil
 }
 
