@@ -2,8 +2,8 @@
 
 [![Go](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/go.yml/badge.svg)](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/go.yml) [![Docker Image CI](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/docker-image.yml/badge.svg)](https://github.com/ssafty/adhan-homeassistant-pi/actions/workflows/docker-image.yml)
 
-This automation app runs Adhan 5 times a day by switching on the speakers before the
-adhan and switching them off directly after. It allows playing Adhan on multi 
+This automation app runs Adhan 5 times a day by switching on the speakers before playing
+the adhan and switching them off directly after. It allows playing Adhan on multi 
 channel speakers, using raspberry pi's ~2W instead of having the speakers switched on 
 (~42W) for a long period of time. Proposal design doc: [here](https://docs.google.com/document/d/1jaiPn7vfulNgkbaxgMCdkzdQyKv2k5WcBebXyMKO92E/edit#heading=h.tgmxtralkmm7).
 
@@ -13,8 +13,6 @@ This is not (yet) a prayer times calculator. The project is currently supporting
 <p align="center">
   <img src=".github/hardware_setup.png?raw=true" alt="Diagram shows how to connect all components"/>
 </p>
-
-
 
 ### Components
 
@@ -34,7 +32,28 @@ This is not (yet) a prayer times calculator. The project is currently supporting
 
 ## Installation
 
-Follow [setup from scratch](https://github.com/ssafty/adhan-homeassistant-pi/wiki#setup-from-scratch).
+Replace the provided sample `adhan.mp3` with your preferred Adhan (also named: `adhan.mp3`). 
+
+```sh
+# Via Docker.
+docker build --no-cache --tag adhan-homeassistant-pi-image:latest .
+docker run \
+	--detach \
+	--restart unless-stopped \
+	--device /dev/snd \
+	-e switch_id=<ADD_ME> \
+	-e homeassistant_ip=<ADD_ME> \  # e.g. http://192.168.178.58:8123
+	-e homeassistant_token=<ADD ME> \
+	adhan-homeassistant-pi-image:latest
+```
+
+Via Docker Compose:
+```sh
+# Replace the ADD_MEs in docker_compose.yml
+docker build compose up -d
+```
+
+Follow [setup from scratch](https://github.com/ssafty/adhan-homeassistant-pi/wiki#setup-from-scratch) for more details.
 
 ## Contributing
 
