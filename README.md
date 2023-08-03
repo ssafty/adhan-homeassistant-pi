@@ -49,7 +49,7 @@ docker run \
 
 Via Docker Compose:
 ```sh
-# Replace the ADD_MEs in docker_compose.yml
+# Replace the ADD_MEs in docker-compose.yml
 docker build compose up -d
 ```
 
