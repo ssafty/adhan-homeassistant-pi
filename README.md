@@ -34,8 +34,8 @@ This is not (yet) a prayer times calculator. The project is currently supporting
 
 Replace the provided sample `adhan.mp3` with your preferred Adhan (rename it to: `adhan.mp3`). 
 
+Run via Dockerfile:
 ```sh
-# Via Docker.
 docker build --no-cache --tag adhan-homeassistant-pi-image:latest .
 docker run \
 	--detach \
@@ -47,7 +47,7 @@ docker run \
 	adhan-homeassistant-pi-image:latest
 ```
 
-Via Docker Compose:
+Run via docker-compose.yml:
 ```sh
 # Replace the ADD_MEs in docker-compose.yml
 docker build compose up -d
