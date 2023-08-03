@@ -28,4 +28,4 @@ services:
       homeassistant_token:  ADD_ME
     devices:
       - /dev/snd  # For container sound.
-    restart: on-failure:5
+    restart: unless-stopped
