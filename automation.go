@@ -133,7 +133,7 @@ func (a *automation) ValidateAllActions() error {
 		return fmt.Errorf("error validating all actions during playing the Adhan: %w", err)
 	}
 
-	sleep(ONE_MINUTE)
+	sleep(20 * time.Second)
 
 	if _, err := a.homeassistant.TurnSwitchOff(); err != nil {
 		return fmt.Errorf("error validating all actions during TurnSwitchOff: %w", err)
