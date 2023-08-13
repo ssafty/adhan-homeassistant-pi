@@ -1,4 +1,4 @@
-module github.com/ssafty/adhan-homeassistant-pi/v2
+module github.com/ssafty/adhan-homeassistant-pi
 
 go 1.20
 
