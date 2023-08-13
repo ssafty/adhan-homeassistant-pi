@@ -1,4 +1,4 @@
-module example.com/m/v2
+module github.com/ssafty/adhan-homeassistant-pi/v2
 
 go 1.20
 
